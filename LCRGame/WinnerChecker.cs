@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Windows;
 
 namespace LCRGame
 {
     internal class WinnerChecker
     {
-        internal static void Check(IGameManager gameManager)
+        internal static void Check(IGameManager gameManager, StringBuilder log)
         {
             int playersWithChips = gameManager.ListOfPlayers.Count(p => p.Chips >= 1);
 
             if (playersWithChips == 1)
             {
-                gameManager.HasWinner = true;
+                gameManager.Winner = gameManager.ListOfPlayers.First(p => p.Chips >= 1);
 
-                //Player playerWithChips = gameManager.ListOfPlayers.First(p => p.Chips >= 1);
-
-                //MessageBox.Show(string.Format("{0} won!", playerWithChips.Name));
-
-                //Environment.Exit(0);
+                log.AppendLine(string.Format(Constants.WINNER_MSG, gameManager.Winner));
             }
             else
             {

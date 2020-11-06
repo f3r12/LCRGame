@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace LCRGame
@@ -13,8 +15,11 @@ namespace LCRGame
 
         public IChipsManager ChipsManager { get; set; }
 
-        public DiceManager(IGameManager gameManager)
+        private StringBuilder Log;
+
+        public DiceManager(IGameManager gameManager, StringBuilder log)
         {
+            Log = log;
             GameManager = gameManager;
             DiceList = new List<Dice>();
             DiceCreator = new DiceCreator();
@@ -33,16 +38,31 @@ namespace LCRGame
 
         public void RollDice()
         {
+            Log.AppendLine(string.Format(Constants.WHOS_TURN_IS_IT_MSG, GameManager.CurrentPlayer.Name, DiceList.Count));
+
             foreach (Dice dice in DiceList)
             {
-                //Thread.Sleep(500);
+                Thread.Sleep(10);
                 int sideId = new System.Random().Next(1, 7);
                 dice.ChooseSide(sideId);
+
+                Log.AppendLine(string.Format(Constants.AFTER_ROLLING_DICES_MSG, dice.ID, dice.AfterRolledSide));
             }
 
             ChipsManager.MoveChips();
 
-            WinnerChecker.Check(GameManager);
+            int dotDiceCount = DiceList.Count(d => d.AfterRolledSide.ToUpper() == Constants.DOT);
+
+            if (dotDiceCount == DiceList.Count)
+            {
+                Log.AppendLine(string.Format(Constants.KEEPING_CHIPS_MSG));
+            }
+            else
+            {
+                Log.AppendLine(string.Format(Constants.MOVING_CHIPS_MSG));
+            }
+
+            WinnerChecker.Check(GameManager, Log);
         }
     }
 }

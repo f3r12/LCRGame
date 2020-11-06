@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace LCRGame
 {
@@ -6,15 +7,15 @@ namespace LCRGame
     {
         int NumberOfPlayers { get; set; }
 
-        IList<Player> ListOfPlayers { get; set; }
+        ObservableCollection<Player> ListOfPlayers { get; set; }
 
         IPlayerCreator PlayerCreator { get; set; }
 
         Player CurrentPlayer { get; set; }
 
-        ITurnsManager TurnsManager { get; set; }
+        Player Winner { get; set; }
 
-        bool HasWinner { get; set; }
+        ITurnsManager TurnsManager { get; set; }
 
         void OpenGame();
     }

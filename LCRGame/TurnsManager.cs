@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LCRGame
 {
     internal class TurnsManager : ITurnsManager
     {
-        public Player GetNext(IList<Player> listOfPlayers, Player currentPlayer)
+        public Player GetNext(ObservableCollection<Player> listOfPlayers, Player currentPlayer)
         {
             Player nextPlayer = null;
 
@@ -25,7 +26,7 @@ namespace LCRGame
             return nextPlayer;
         }
 
-        private Player GetPossibleNextPlayer(IList<Player> listOfPlayers, int currentId)
+        private Player GetPossibleNextPlayer(ObservableCollection<Player> listOfPlayers, int currentId)
         {
             Player nextPlayer = null;
 

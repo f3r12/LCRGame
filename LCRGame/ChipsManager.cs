@@ -22,18 +22,18 @@ namespace LCRGame
             {
                 diceSide = dice.AfterRolledSide.ToUpper();
 
-                if (diceSide == "P")
+                if (diceSide == Constants.DOT)
                 {
                     continue;
                 }
 
                 GameManager.CurrentPlayer.Chips--;
 
-                if (diceSide == "L")
+                if (diceSide == Constants.LEFT)
                 {
                     GameManager.CurrentPlayer.Left.Chips++;
                 }
-                else if (diceSide == "R")
+                else if (diceSide == Constants.RIGHT)
                 {
                     GameManager.CurrentPlayer.Right.Chips++;
                 }

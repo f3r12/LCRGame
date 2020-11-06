@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LCRGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800" ResizeMode="CanMinimize">
     <Grid>
-        
+        <Button Content="Simulate" HorizontalAlignment="Left" Height="40" Margin="20,20" VerticalAlignment="Top" Width="100" Click="SimulateButton_Click"/>
+        <DataGrid Name="PlayersData" Height="249" Margin="150,20,30,0" VerticalAlignment="Top" ItemsSource="{Binding Source=gameManager, Mode=TwoWay, Path=ListOfPlayers}"/>
+        <TextBox Name="LogBox" HorizontalAlignment="Left" Margin="20,286,0,0" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top" Height="257" Width="742" Text="{Binding Mode=TwoWay, Path=Log}" VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </Window>

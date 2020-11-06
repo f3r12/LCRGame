@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Assigner.cs" />
     <Compile Include="ChipsManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="DiceCreator.cs" />
     <Compile Include="DiceManager.cs" />

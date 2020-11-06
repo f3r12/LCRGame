@@ -17,7 +17,7 @@
         public Player(int id)
         {
             ID = id;
-            Name = "Player " + id;
+            Name = Constants.PLAYER_NAME_PREFIX + id;
             Chips = 3;
         }
 
@@ -29,6 +29,11 @@
         public void DecreaseChips()
         {
             this.Chips--;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

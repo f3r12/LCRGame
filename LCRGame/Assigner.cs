@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LCRGame
 {
     internal class Assigner
     {
-        internal static void AssignLeftAndRightPlayers(IList<Player> listOfPlayers)
+        internal static void AssignLeftAndRightPlayers(ObservableCollection<Player> listOfPlayers)
         {
             Player player;
 
@@ -18,7 +19,7 @@ namespace LCRGame
             }
         }
 
-        private static Player GetRightPlayer(IList<Player> listOfPlayers, int rightPlayerId)
+        private static Player GetRightPlayer(ObservableCollection<Player> listOfPlayers, int rightPlayerId)
         {
             if (rightPlayerId == 1)
             {
@@ -31,7 +32,7 @@ namespace LCRGame
             }
         }
 
-        private static Player GetLeftPlayer(IList<Player> listOfPlayers, int leftPlayerId)
+        private static Player GetLeftPlayer(ObservableCollection<Player> listOfPlayers, int leftPlayerId)
         {
             if (listOfPlayers.Count == leftPlayerId)
             {

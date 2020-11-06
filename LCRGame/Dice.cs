@@ -5,14 +5,6 @@ namespace LCRGame
 {
     public class Dice
     {
-        private const string DOT = "P";
-
-        private const string LEFT = "L";
-
-        private const string CENTER = "C";
-
-        private const string RIGHT = "R";
-
         public int ID { get; set; }
 
         public Dictionary<int, string> Side { get; set; }
@@ -29,12 +21,12 @@ namespace LCRGame
 
         private void FillDiceSides()
         {
-            Side.Add(1, DOT);
-            Side.Add(2, DOT);
-            Side.Add(3, DOT);
-            Side.Add(4, LEFT);
-            Side.Add(5, CENTER);
-            Side.Add(6, RIGHT);
+            Side.Add(1, Constants.DOT);
+            Side.Add(2, Constants.LEFT);
+            Side.Add(3, Constants.DOT);
+            Side.Add(4, Constants.CENTER);
+            Side.Add(5, Constants.DOT);
+            Side.Add(6, Constants.RIGHT);
         }
 
         public string ChooseSide(int sideId)

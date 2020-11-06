@@ -20,42 +20,73 @@ namespace LCRGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IGameManager gameManager;
+
+        private IDiceManager diceManager;
+
+        private int numberOfPlayers;
+
+        private int numberOfGamesToSimulate;
+
+        private StringBuilder Log;
+
         public MainWindow()
         {
+            Log = new StringBuilder(1000);
+
+            numberOfPlayers = (Application.Current as App).NumberOfPlayers;
+            numberOfGamesToSimulate = (Application.Current as App).NumberOfGamesToSimulate;
+
+            gameManager = new GameManager(numberOfPlayers);
+            gameManager.OpenGame();
+
+            InitializeComponent();
+
+            RefreshBindings();
+        }
+
+        private void SimulateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Clear();
             int turnsCounter;
             Dictionary<int, int> GamesByTurns = new Dictionary<int, int>();
 
-            int numberOfPlayers = (Application.Current as App).NumberOfPlayers;
-            int numberOfGamesToSimulate = (Application.Current as App).NumberOfGamesToSimulate;
-
-            IGameManager gameManager;
-            IDiceManager diceManager;
-
             for (int i = 1; i <= numberOfGamesToSimulate; i++)
             {
-                turnsCounter = 0;
+                Log.AppendLine(string.Format(Constants.STARTING_GAME_MSG, i));
+
+                turnsCounter = 1;
                 gameManager = new GameManager(numberOfPlayers);
                 gameManager.OpenGame();
 
                 do
                 {
-                    diceManager = new DiceManager(gameManager);
+                    diceManager = new DiceManager(gameManager, Log);
                     diceManager.RollDice();
                     turnsCounter++;
-                } while (!gameManager.HasWinner);
+
+                    RefreshBindings();
+                } while (gameManager.Winner == null);
 
                 GamesByTurns.Add(i, turnsCounter);
+                Log.AppendLine(string.Format(Constants.TURNS_COUNT_MSG, turnsCounter));
             }
 
             int shortestLengthGame = GamesByTurns.Min(g => g.Value);
             int longestLengthGame = GamesByTurns.Max(g => g.Value);
             double averageLengthGame = Math.Ceiling(GamesByTurns.Average(g => g.Value));
 
-            string msg = string.Format("The shortest length game had {0} turns\n\nThe longest length game had {1} turns\n\nThe average length game is {2} turns",
-                shortestLengthGame, longestLengthGame, averageLengthGame);
-            MessageBox.Show(msg);
+            Log.AppendLine(string.Format(Constants.SHORTEST_LENGTH_GAME_MSG, shortestLengthGame));
+            Log.AppendLine(string.Format(Constants.LONGEST_LENGTH_GAME_MSG, longestLengthGame));
+            Log.AppendLine(string.Format(Constants.AVERAGE_LENGTH_GAME_MSG, averageLengthGame));
 
-            InitializeComponent();
+            RefreshBindings();
+        }
+
+        private void RefreshBindings()
+        {
+            PlayersData.ItemsSource = gameManager.ListOfPlayers;
+            LogBox.Text = Log.ToString();
         }
     }
 }
